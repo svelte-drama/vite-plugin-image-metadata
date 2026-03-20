@@ -1,6 +1,6 @@
 {
 	"name": "@svelte-drama/vite-plugin-image-metadata",
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"packageManager": "pnpm@10.2.0",
 	"scripts": {
 		"dev": "vite dev --force",
@@ -18,20 +18,13 @@
 		"!dist/**/*.test.*",
 		"!dist/**/*.spec.*"
 	],
-	"sideEffects": [
-		"**/*.css"
-	],
-	"svelte": "./dist/index.js",
 	"types": "./dist/index.d.ts",
 	"type": "module",
 	"exports": {
 		".": {
 			"types": "./dist/index.d.ts",
-			"svelte": "./dist/index.js"
+			"default": "./dist/index.js"
 		}
-	},
-	"peerDependencies": {
-		"svelte": "^5.0.0"
 	},
 	"devDependencies": {
 		"@sveltejs/adapter-auto": "^7.0.0",

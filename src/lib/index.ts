@@ -1,3 +1,5 @@
+import './image.d.ts'
+
 import sharp from 'sharp'
 import type { Plugin, ResolvedConfig } from 'vite'
 import { readFile } from 'fs/promises'
