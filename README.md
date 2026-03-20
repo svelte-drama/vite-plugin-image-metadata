@@ -26,9 +26,3 @@ export default defineConfig({
 import Eevee from './133_us.png?image'
 const { height, width, src } = Eevee
 ```
-
-Named exports are also available:
-
-```js
-import { src, width, height } from './133_us.png?image'
-```

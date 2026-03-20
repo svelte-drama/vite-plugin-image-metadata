@@ -1,9 +1,8 @@
-import './image.d.ts'
-
 import sharp from 'sharp'
 import type { Plugin, ResolvedConfig } from 'vite'
 import { readFile } from 'fs/promises'
 import { basename } from 'path'
+export type { Image } from './types.ts'
 
 const IMAGE_REGEX = /\?image$/
 
@@ -53,12 +52,7 @@ export default function imageMetadata(): Plugin {
 					src = `import.meta.ROLLUP_FILE_URL_${reference_id}`
 				}
 
-				return `
-export const height = ${height}
-export const width = ${width}
-export const src = ${src}
-export default { height, width, src }
-`
+				return `export default { height: ${height}, width: ${width}, src: ${src} }`
 			}
 		}
 	}
