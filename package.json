@@ -1,9 +1,10 @@
 {
 	"name": "@svelte-drama/vite-plugin-image-metadata",
 	"version": "1.0.0",
+	"packageManager": "pnpm@10.2.0",
 	"scripts": {
 		"dev": "vite dev --force",
-		"build": "vite build && npm run prepack",
+		"build": "vite build && pnpm run prepack",
 		"preview": "vite preview",
 		"prepare": "svelte-kit sync || echo ''",
 		"prepack": "svelte-kit sync && svelte-package && publint",
