@@ -39,7 +39,7 @@ export default function imageMetadata(): Plugin {
 				const file = await readFile(file_path)
 
 				const { height, width } = await sharp(file).metadata()
-				let src = `'/@fs/${file_path}'`
+				let src = `/@fs/${file_path}`
 
 				if (config.command === 'build') {
 					const reference_id = this.emitFile({
@@ -47,10 +47,10 @@ export default function imageMetadata(): Plugin {
 						name: basename(file_path),
 						source: file
 					})
-					src = `import.meta.ROLLUP_FILE_URL_${reference_id}`
+					src = `__VITE_ASSET__${reference_id}__`
 				}
 
-				return `export default { height: ${height}, width: ${width}, src: ${src} }`
+				return `export default { height: ${height}, width: ${width}, src: "${src}" }`
 			}
 		}
 	}
