@@ -1,6 +1,6 @@
 {
 	"name": "@svelte-drama/vite-plugin-image-metadata",
-	"version": "1.0.5",
+	"version": "1.0.6",
 	"packageManager": "pnpm@10.2.0",
 	"scripts": {
 		"dev": "vite dev --force",
@@ -31,7 +31,6 @@
 		"@sveltejs/kit": "^2.50.2",
 		"@sveltejs/package": "^2.5.7",
 		"@sveltejs/vite-plugin-svelte": "^6.2.4",
-		"@types/node": "^25.5.0",
 		"prettier": "^3.8.1",
 		"prettier-plugin-svelte": "^3.4.1",
 		"publint": "^0.3.17",

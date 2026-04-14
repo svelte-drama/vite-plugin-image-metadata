@@ -1,21 +1,19 @@
 import sharp from 'sharp'
-import type { Plugin, ResolvedConfig } from 'vite'
-import { readFile } from 'fs/promises'
-import { basename } from 'path'
+import type { Plugin, ViteDevServer } from 'vite'
 export type { Image } from './types.ts'
 
 const IMAGE_REGEX = /\?image$/
 
 export default function imageMetadata(): Plugin {
-	let config: ResolvedConfig
+	let vite_server: ViteDevServer | undefined
 
 	return {
 		name: 'image-metadata',
 		enforce: 'pre',
-		configResolved(resolved) {
-			config = resolved
-		},
 
+		configureServer(server) {
+			vite_server = server
+		},
 		resolveId: {
 			filter: {
 				id: IMAGE_REGEX
@@ -36,21 +34,23 @@ export default function imageMetadata(): Plugin {
 			},
 			async handler(id) {
 				const file_path = id.replace(IMAGE_REGEX, '')
-				const file = await readFile(file_path)
 
-				const { height, width } = await sharp(file).metadata()
-				let src = `/@fs/${file_path}`
-
-				if (config.command === 'build') {
-					const reference_id = this.emitFile({
-						type: 'asset',
-						name: basename(file_path),
-						source: file
-					})
-					src = `__VITE_ASSET__${reference_id}__`
+				const getModule = async () => {
+					if (vite_server) {
+						return vite_server.transformRequest(`${file_path}?url`)
+					} else {
+						const resolved = await this.resolve(`${file_path}?url`)
+						if (!resolved) return null
+						return this.load(resolved)
+					}
 				}
 
-				return `export default { height: ${height}, width: ${width}, src: "${src}" }`
+				const module = await getModule()
+				if (!module || !module.code) return null
+				const src = module.code.replace('export default ', '')
+
+				const { height, width } = await sharp(file_path).metadata()
+				return `export default { height: ${height}, width: ${width}, src: ${src} }`
 			}
 		}
 	}
