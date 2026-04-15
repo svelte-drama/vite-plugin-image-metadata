@@ -39,7 +39,7 @@ export default function imageMetadata(): Plugin {
 				const file = await readFile(file_path)
 
 				const { height, width } = await sharp(file).metadata()
-				let src = `${config.base}/@fs/${file_path}`
+				let src = `${config.base}@fs/${file_path}`
 
 				if (config.command === 'build') {
 					const reference_id = this.emitFile({
